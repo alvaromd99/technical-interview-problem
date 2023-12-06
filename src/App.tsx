@@ -1,17 +1,15 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import './App.css'
-import { User } from './types/types'
 import UsersTable from './components/UsersTable'
+import { useUserStore } from './store/useUserStore'
 
 function App() {
-	const [users, setUsers] = useState<User[]>([])
+	const { users } = useUserStore()
+	const { getUsers } = useUserStore()
 
 	useEffect(() => {
-		fetch('https://randomuser.me/api/?results=100')
-			.then((response) => response.json())
-			.then((data) => setUsers(data.results))
-			.catch((error) => console.error(error))
-	}, [])
+		getUsers()
+	}, [getUsers])
 
 	return (
 		<div className='App'>
