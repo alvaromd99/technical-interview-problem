@@ -37,7 +37,7 @@ export default function UsersTable() {
 							<td>{user.name.last}</td>
 							<td>{user.location.country}</td>
 							<td>
-								<button>Delete</button>
+								<button className='action-btn'>Delete</button>
 							</td>
 						</tr>
 					)

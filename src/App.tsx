@@ -14,8 +14,12 @@ function App() {
 		<div className='App'>
 			<h1>List Of Users</h1>
 			<header>
-				<button onClick={toggleShowColors}>Color rows</button>
-				<button onClick={toggleOrderByCountry}>Order by country</button>
+				<button className='btn' onClick={toggleShowColors}>
+					Color rows
+				</button>
+				<button className='btn' onClick={toggleOrderByCountry}>
+					Order by country
+				</button>
 			</header>
 			<UsersTable />
 		</div>
