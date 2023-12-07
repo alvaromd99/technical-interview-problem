@@ -1,12 +1,15 @@
 import { useUserStore } from '../store/useUserStore'
 import { User } from '../types/types'
 
-interface Props {
-	users: User[]
-}
+export default function UsersTable() {
+	const { users, showColors, orderByCountry } = useUserStore()
 
-export default function UsersTable({ users }: Props) {
-	const { showColors } = useUserStore()
+	const usersToShow: User[] = orderByCountry
+		? [...users].sort(
+				(a, b) => a.location.country.localeCompare(b.location.country)
+				// eslint-disable-next-line no-mixed-spaces-and-tabs
+		  )
+		: users
 
 	return (
 		<table className='table'>
@@ -20,9 +23,10 @@ export default function UsersTable({ users }: Props) {
 				</tr>
 			</thead>
 			<tbody className={`${showColors ? 'colored' : ''}`}>
-				{users.map((user) => {
+				{usersToShow.map((user) => {
+					const uniqueId = crypto.randomUUID()
 					return (
-						<tr key={user.id.value}>
+						<tr key={uniqueId}>
 							<td className='image-cell'>
 								<img
 									src={user.picture.thumbnail}
