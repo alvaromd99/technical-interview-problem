@@ -5,7 +5,7 @@ import { useUserStore } from './store/useUserStore'
 
 function App() {
 	const { users } = useUserStore()
-	const { getUsers } = useUserStore()
+	const { getUsers, toggleShowColors } = useUserStore()
 
 	useEffect(() => {
 		getUsers()
@@ -14,6 +14,9 @@ function App() {
 	return (
 		<div className='App'>
 			<h1>List Of Users</h1>
+			<header>
+				<button onClick={toggleShowColors}>Color rows</button>
+			</header>
 			<UsersTable users={users} />
 		</div>
 	)

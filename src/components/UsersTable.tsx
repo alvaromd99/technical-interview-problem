@@ -1,3 +1,4 @@
+import { useUserStore } from '../store/useUserStore'
 import { User } from '../types/types'
 
 interface Props {
@@ -5,8 +6,10 @@ interface Props {
 }
 
 export default function UsersTable({ users }: Props) {
+	const { showColors } = useUserStore()
+
 	return (
-		<table>
+		<table className='table'>
 			<thead>
 				<tr>
 					<th>Photo</th>
@@ -16,12 +19,15 @@ export default function UsersTable({ users }: Props) {
 					<th>Actions</th>
 				</tr>
 			</thead>
-			<tbody>
-				{users.map((user, index) => {
+			<tbody className={`${showColors ? 'colored' : ''}`}>
+				{users.map((user) => {
 					return (
-						<tr key={index}>
-							<td>
-								<img src={user.picture.thumbnail} alt='Photo' />
+						<tr key={user.id.value}>
+							<td className='image-cell'>
+								<img
+									src={user.picture.thumbnail}
+									alt={`${user.name.first} Photo`}
+								/>
 							</td>
 							<td>{user.name.first}</td>
 							<td>{user.name.last}</td>
