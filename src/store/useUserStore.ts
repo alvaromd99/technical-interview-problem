@@ -6,6 +6,7 @@ interface UserState {
 	showColors: boolean
 	orderByCountry: boolean
 	getUsers: () => Promise<void>
+	deleteUser: (uuid: string) => void
 	toggleShowColors: () => void
 	toggleOrderByCountry: () => void
 }
@@ -20,6 +21,13 @@ export const useUserStore = create<UserState>((set, get) => ({
 
 		set(() => ({
 			users: users.results,
+		}))
+	},
+	deleteUser: (uuid) => {
+		const filterUsers = get().users.filter((u) => u.login.uuid !== uuid)
+
+		set(() => ({
+			users: filterUsers,
 		}))
 	},
 	toggleShowColors: () => {

@@ -3,9 +3,10 @@ import { User } from '../types/types'
 
 export default function UsersTable() {
 	const { users, showColors, orderByCountry } = useUserStore()
+	const { deleteUser } = useUserStore()
 
 	const usersToShow: User[] = orderByCountry
-		? [...users].sort(
+		? users.toSorted(
 				(a, b) => a.location.country.localeCompare(b.location.country)
 				// eslint-disable-next-line no-mixed-spaces-and-tabs
 		  )
@@ -24,9 +25,8 @@ export default function UsersTable() {
 			</thead>
 			<tbody className={`${showColors ? 'colored' : ''}`}>
 				{usersToShow.map((user) => {
-					const uniqueId = crypto.randomUUID()
 					return (
-						<tr key={uniqueId}>
+						<tr key={user.login.uuid}>
 							<td className='image-cell'>
 								<img
 									src={user.picture.thumbnail}
@@ -37,7 +37,11 @@ export default function UsersTable() {
 							<td>{user.name.last}</td>
 							<td>{user.location.country}</td>
 							<td>
-								<button className='action-btn'>Delete</button>
+								<button
+									className='action-btn'
+									onClick={() => deleteUser(user.login.uuid)}>
+									Delete
+								</button>
 							</td>
 						</tr>
 					)
