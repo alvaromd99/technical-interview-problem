@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import './App.css'
 import UsersTable from './components/UsersTable'
 import { useUserStore } from './store/useUserStore'
+import Button from './components/btn/Button'
 
 function App() {
 	const { getUsers, toggleShowColors, toggleOrderByCountry } = useUserStore()
@@ -14,12 +15,8 @@ function App() {
 		<div className='App'>
 			<h1>List Of Users</h1>
 			<header>
-				<button className='btn' onClick={toggleShowColors}>
-					Color rows
-				</button>
-				<button className='btn' onClick={toggleOrderByCountry}>
-					Order by country
-				</button>
+				<Button text='Color rows' handleClick={toggleShowColors} />
+				<Button text='Order by country' handleClick={toggleOrderByCountry} />
 			</header>
 			<UsersTable />
 		</div>
