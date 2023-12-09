@@ -1,14 +1,13 @@
 import { create } from 'zustand'
 import { User } from '../types/types'
 
-interface UserState {
+export interface UserState {
 	users: User[]
 	showColors: boolean
 	orderByCountry: boolean
 	getUsers: () => Promise<void>
 	deleteUser: (uuid: string) => void
-	toggleShowColors: () => void
-	toggleOrderByCountry: () => void
+	toggleProperty: <K extends keyof UserState>(propertyName: K) => void
 }
 
 export const useUserStore = create<UserState>((set, get) => ({
@@ -30,14 +29,9 @@ export const useUserStore = create<UserState>((set, get) => ({
 			users: filterUsers,
 		}))
 	},
-	toggleShowColors: () => {
+	toggleProperty: (propertyName) => {
 		set(() => ({
-			showColors: !get().showColors,
-		}))
-	},
-	toggleOrderByCountry: () => {
-		set(() => ({
-			orderByCountry: !get().orderByCountry,
+			[propertyName]: !get()[propertyName],
 		}))
 	},
 }))

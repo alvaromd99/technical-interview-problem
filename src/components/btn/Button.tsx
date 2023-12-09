@@ -1,11 +1,14 @@
+import { UserState, useUserStore } from '../../store/useUserStore'
+
 interface Props {
 	text: string
-	handleClick: () => void
+	propertyName: keyof UserState
 }
 
-const Button = ({ text, handleClick }: Props) => {
+const Button = ({ text, propertyName }: Props) => {
+	const { toggleProperty } = useUserStore()
 	return (
-		<button className='btn' onClick={handleClick}>
+		<button className='btn' onClick={() => toggleProperty(propertyName)}>
 			{text}
 		</button>
 	)

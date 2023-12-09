@@ -5,7 +5,7 @@ import { useUserStore } from './store/useUserStore'
 import Button from './components/btn/Button'
 
 function App() {
-	const { getUsers, toggleShowColors, toggleOrderByCountry } = useUserStore()
+	const { getUsers } = useUserStore()
 
 	useEffect(() => {
 		getUsers()
@@ -15,8 +15,8 @@ function App() {
 		<div className='App'>
 			<h1>List Of Users</h1>
 			<header>
-				<Button text='Color rows' handleClick={toggleShowColors} />
-				<Button text='Order by country' handleClick={toggleOrderByCountry} />
+				<Button text='Color rows' propertyName='showColors' />
+				<Button text='Order by country' propertyName='orderByCountry' />
 			</header>
 			<UsersTable />
 		</div>
