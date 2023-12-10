@@ -3,15 +3,18 @@ import { User } from '../types/types'
 
 export interface UserState {
 	users: User[]
+	originalUsers: User[]
 	showColors: boolean
 	orderByCountry: boolean
 	getUsers: () => Promise<void>
 	deleteUser: (uuid: string) => void
+	resetUsers: () => void
 	toggleProperty: <K extends keyof UserState>(propertyName: K) => void
 }
 
 export const useUserStore = create<UserState>((set, get) => ({
 	users: [],
+	originalUsers: [],
 	showColors: false,
 	orderByCountry: false,
 	getUsers: async () => {
@@ -20,6 +23,7 @@ export const useUserStore = create<UserState>((set, get) => ({
 
 		set(() => ({
 			users: users.results,
+			originalUsers: users.results,
 		}))
 	},
 	deleteUser: (uuid) => {
@@ -27,6 +31,11 @@ export const useUserStore = create<UserState>((set, get) => ({
 
 		set(() => ({
 			users: filterUsers,
+		}))
+	},
+	resetUsers: () => {
+		set(() => ({
+			users: get().originalUsers,
 		}))
 	},
 	toggleProperty: (propertyName) => {

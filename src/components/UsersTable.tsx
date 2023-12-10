@@ -38,7 +38,7 @@ export default function UsersTable() {
 							<td>{user.location.country}</td>
 							<td>
 								<button
-									className='action-btn'
+									className='btn action-btn'
 									onClick={() => deleteUser(user.login.uuid)}>
 									Delete
 								</button>

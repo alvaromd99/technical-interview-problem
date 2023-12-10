@@ -1,11 +1,11 @@
 import { UserState, useUserStore } from '../../store/useUserStore'
 
-interface Props {
+interface ButtonProps {
 	text: string
 	propertyName: keyof UserState
 }
 
-const Button = ({ text, propertyName }: Props) => {
+const Button = ({ text, propertyName }: ButtonProps) => {
 	const { toggleProperty } = useUserStore()
 	return (
 		<button className='btn' onClick={() => toggleProperty(propertyName)}>

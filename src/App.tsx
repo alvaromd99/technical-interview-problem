@@ -5,7 +5,7 @@ import { useUserStore } from './store/useUserStore'
 import Button from './components/btn/Button'
 
 function App() {
-	const { getUsers } = useUserStore()
+	const { getUsers, resetUsers } = useUserStore()
 
 	useEffect(() => {
 		getUsers()
@@ -17,6 +17,9 @@ function App() {
 			<header>
 				<Button text='Color rows' propertyName='showColors' />
 				<Button text='Order by country' propertyName='orderByCountry' />
+				<button className='btn' onClick={resetUsers}>
+					Reset
+				</button>
 			</header>
 			<UsersTable />
 		</div>
