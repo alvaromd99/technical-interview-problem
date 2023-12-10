@@ -2,7 +2,8 @@ import { useEffect } from 'react'
 import './App.css'
 import UsersTable from './components/UsersTable'
 import { useUserStore } from './store/useUserStore'
-import Button from './components/btn/Button'
+import ToggleBtn from './components/buttons/ToggleBtn'
+import NormalBtn from './components/buttons/NormalBtn'
 
 function App() {
 	const { getUsers, resetUsers } = useUserStore()
@@ -15,11 +16,9 @@ function App() {
 		<div className='App'>
 			<h1>List Of Users</h1>
 			<header>
-				<Button text='Color rows' propertyName='showColors' />
-				<Button text='Order by country' propertyName='orderByCountry' />
-				<button className='btn' onClick={resetUsers}>
-					Reset
-				</button>
+				<ToggleBtn text='Color rows' propertyName='showColors' />
+				<ToggleBtn text='Order by country' propertyName='orderByCountry' />
+				<NormalBtn text='Reset Users' handleClick={resetUsers} />
 			</header>
 			<UsersTable />
 		</div>

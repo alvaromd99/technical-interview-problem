@@ -1,11 +1,11 @@
 import { UserState, useUserStore } from '../../store/useUserStore'
 
-interface ButtonProps {
+interface ToggleBtnProps {
 	text: string
 	propertyName: keyof UserState
 }
 
-const Button = ({ text, propertyName }: ButtonProps) => {
+const ToggleBtn = ({ text, propertyName }: ToggleBtnProps) => {
 	const { toggleProperty } = useUserStore()
 	return (
 		<button className='btn' onClick={() => toggleProperty(propertyName)}>
@@ -14,4 +14,4 @@ const Button = ({ text, propertyName }: ButtonProps) => {
 	)
 }
 
-export default Button
+export default ToggleBtn
