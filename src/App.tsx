@@ -1,16 +1,17 @@
-import { useEffect } from 'react'
 import './App.css'
 import UsersTable from './components/UsersTable'
 import { useUserStore } from './store/useUserStore'
 import ToggleBtn from './components/buttons/ToggleBtn'
 import NormalBtn from './components/buttons/NormalBtn'
+import useFetchUsers from './hooks/useFetchUsers'
 
 function App() {
-	const { getUsers, resetUsers } = useUserStore()
+	const { originalUsers, loading, error } = useFetchUsers()
+	const { setUsers } = useUserStore()
 
-	useEffect(() => {
-		getUsers()
-	}, [getUsers])
+	const handleReset = () => {
+		setUsers(originalUsers)
+	}
 
 	return (
 		<div className='App'>
@@ -18,9 +19,10 @@ function App() {
 			<header>
 				<ToggleBtn text='Color rows' propertyName='showColors' />
 				<ToggleBtn text='Order by country' propertyName='orderByCountry' />
-				<NormalBtn text='Reset Users' handleClick={resetUsers} />
+				<NormalBtn text='Reset Users' handleClick={handleReset} />
 			</header>
-			<UsersTable />
+			{loading && <p>Loading...</p>}
+			{!loading && !error && <UsersTable />}
 		</div>
 	)
 }

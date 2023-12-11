@@ -6,24 +6,25 @@ export interface UserState {
 	originalUsers: User[]
 	showColors: boolean
 	orderByCountry: boolean
-	getUsers: () => Promise<void>
-	deleteUser: (uuid: string) => void
-	resetUsers: () => void
-	toggleProperty: <K extends keyof UserState>(propertyName: K) => void
 }
 
-export const useUserStore = create<UserState>((set, get) => ({
+interface UserActions {
+	setUsers: (newUsers: User[]) => void
+	deleteUser: (uuid: string) => void
+	toggleProperty: <K extends keyof UserState>(propertyName: K) => void
+	/* getUsers: () => Promise<void> */
+	/* resetUsers: () => void */
+}
+
+export const useUserStore = create<UserState & UserActions>((set, get) => ({
 	users: [],
 	originalUsers: [],
 	showColors: false,
 	orderByCountry: false,
-	getUsers: async () => {
-		const response = await fetch('https://randomuser.me/api/?results=100')
-		const users = await response.json()
-
+	setUsers: (newUsers) => {
 		set(() => ({
-			users: users.results,
-			originalUsers: users.results,
+			users: newUsers,
+			originalUsers: newUsers,
 		}))
 	},
 	deleteUser: (uuid) => {
@@ -33,14 +34,23 @@ export const useUserStore = create<UserState>((set, get) => ({
 			users: filterUsers,
 		}))
 	},
-	resetUsers: () => {
-		set(() => ({
-			users: get().originalUsers,
-		}))
-	},
 	toggleProperty: (propertyName) => {
 		set(() => ({
 			[propertyName]: !get()[propertyName],
 		}))
 	},
+	/* getUsers: async () => {
+		const response = await fetch('https://randomuser.me/api/?results=100')
+		const users = await response.json()
+	
+		set(() => ({
+			users: users.results,
+			originalUsers: users.results,
+		}))
+	}, */
+	/* resetUsers: () => {
+		set(() => ({
+			users: get().originalUsers,
+		}))
+	}, */
 }))
