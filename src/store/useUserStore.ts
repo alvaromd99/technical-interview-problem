@@ -6,12 +6,14 @@ export interface UserState {
 	originalUsers: User[]
 	showColors: boolean
 	orderByCountry: boolean
+	filterCountry: string
 }
 
 interface UserActions {
 	setUsers: (newUsers: User[]) => void
 	deleteUser: (uuid: string) => void
 	toggleProperty: <K extends keyof UserState>(propertyName: K) => void
+	setFilterCountry: (value: string) => void
 	/* getUsers: () => Promise<void> */
 	/* resetUsers: () => void */
 }
@@ -21,6 +23,7 @@ export const useUserStore = create<UserState & UserActions>((set, get) => ({
 	originalUsers: [],
 	showColors: false,
 	orderByCountry: false,
+	filterCountry: '',
 	setUsers: (newUsers) => {
 		set(() => ({
 			users: newUsers,
@@ -37,6 +40,11 @@ export const useUserStore = create<UserState & UserActions>((set, get) => ({
 	toggleProperty: (propertyName) => {
 		set(() => ({
 			[propertyName]: !get()[propertyName],
+		}))
+	},
+	setFilterCountry: (value) => {
+		set(() => ({
+			filterCountry: value,
 		}))
 	},
 	/* getUsers: async () => {

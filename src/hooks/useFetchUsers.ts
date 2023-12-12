@@ -5,7 +5,7 @@ import { User } from '../types/types'
 const useFetchUsers = () => {
 	const { setUsers } = useUserStore()
 	const [loading, setLoading] = useState(true)
-	const [error, setError] = useState<null | unknown>(null)
+	const [error, setError] = useState(false)
 
 	const originalUsers = useRef<User[]>([])
 
@@ -17,8 +17,9 @@ const useFetchUsers = () => {
 
 				setUsers(usersData.results)
 				originalUsers.current = usersData.results
-			} catch (error: unknown) {
-				setError(error)
+			} catch (error) {
+				console.log(error)
+				setError(true)
 			} finally {
 				setLoading(false)
 			}

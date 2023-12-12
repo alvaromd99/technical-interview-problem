@@ -1,16 +1,30 @@
+import { useMemo } from 'react'
 import { useUserStore } from '../store/useUserStore'
-import { User } from '../types/types'
 
 export default function UsersTable() {
-	const { users, showColors, orderByCountry } = useUserStore()
+	const { users, showColors, orderByCountry, filterCountry } = useUserStore()
 	const { deleteUser } = useUserStore()
 
-	const usersToShow: User[] = orderByCountry
-		? users.toSorted(
-				(a, b) => a.location.country.localeCompare(b.location.country)
-				// eslint-disable-next-line no-mixed-spaces-and-tabs
-		  )
-		: users
+	const filteredUsers = useMemo(() => {
+		return filterCountry !== ''
+			? users.filter(
+					(user) =>
+						user.location.country
+							.toLowerCase()
+							.includes(filterCountry.toLowerCase())
+					// eslint-disable-next-line no-mixed-spaces-and-tabs
+			  )
+			: users
+	}, [users, filterCountry])
+
+	const sortedUsers = useMemo(() => {
+		return orderByCountry
+			? filteredUsers.toSorted(
+					(a, b) => a.location.country.localeCompare(b.location.country)
+					// eslint-disable-next-line no-mixed-spaces-and-tabs
+			  )
+			: filteredUsers
+	}, [filteredUsers, orderByCountry])
 
 	return (
 		<table className='table'>
@@ -24,7 +38,7 @@ export default function UsersTable() {
 				</tr>
 			</thead>
 			<tbody className={`${showColors ? 'colored' : ''}`}>
-				{usersToShow.map((user) => {
+				{sortedUsers.map((user) => {
 					return (
 						<tr key={user.login.uuid}>
 							<td className='image-cell'>

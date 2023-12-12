@@ -7,7 +7,7 @@ import useFetchUsers from './hooks/useFetchUsers'
 
 function App() {
 	const { originalUsers, loading, error } = useFetchUsers()
-	const { setUsers } = useUserStore()
+	const { setUsers, setFilterCountry } = useUserStore()
 
 	const handleReset = () => {
 		setUsers(originalUsers)
@@ -20,8 +20,15 @@ function App() {
 				<ToggleBtn text='Color rows' propertyName='showColors' />
 				<ToggleBtn text='Order by country' propertyName='orderByCountry' />
 				<NormalBtn text='Reset Users' handleClick={handleReset} />
+				<input
+					type='text'
+					name='filter'
+					placeholder='Search a country'
+					onChange={(e) => setFilterCountry(e.target.value)}
+				/>
 			</header>
-			{loading && <p>Loading...</p>}
+			{loading && !error && <p>Loading...</p>}
+			{!loading && error && <p>Error fetching data.</p>}
 			{!loading && !error && <UsersTable />}
 		</div>
 	)
