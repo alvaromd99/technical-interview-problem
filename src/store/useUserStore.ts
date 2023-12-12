@@ -1,11 +1,10 @@
 import { create } from 'zustand'
-import { User } from '../types/types'
+import { SortBy, User } from '../types/types'
 
 export interface UserState {
 	users: User[]
-	originalUsers: User[]
 	showColors: boolean
-	orderByCountry: boolean
+	sortingValue: SortBy
 	filterCountry: string
 }
 
@@ -14,15 +13,15 @@ interface UserActions {
 	deleteUser: (uuid: string) => void
 	toggleProperty: <K extends keyof UserState>(propertyName: K) => void
 	setFilterCountry: (value: string) => void
+	setSortingValue: (value: SortBy) => void
 	/* getUsers: () => Promise<void> */
 	/* resetUsers: () => void */
 }
 
 export const useUserStore = create<UserState & UserActions>((set, get) => ({
 	users: [],
-	originalUsers: [],
 	showColors: false,
-	orderByCountry: false,
+	sortingValue: SortBy.NONE,
 	filterCountry: '',
 	setUsers: (newUsers) => {
 		set(() => ({
@@ -45,6 +44,11 @@ export const useUserStore = create<UserState & UserActions>((set, get) => ({
 	setFilterCountry: (value) => {
 		set(() => ({
 			filterCountry: value,
+		}))
+	},
+	setSortingValue: (value) => {
+		set(() => ({
+			sortingValue: value,
 		}))
 	},
 	/* getUsers: async () => {

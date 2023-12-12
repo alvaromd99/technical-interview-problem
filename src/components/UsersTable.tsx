@@ -1,8 +1,9 @@
 import { useMemo } from 'react'
 import { useUserStore } from '../store/useUserStore'
+import { SortBy } from '../types/types'
 
 export default function UsersTable() {
-	const { users, showColors, orderByCountry, filterCountry } = useUserStore()
+	const { users, showColors, sortingValue, filterCountry } = useUserStore()
 	const { deleteUser } = useUserStore()
 
 	const filteredUsers = useMemo(() => {
@@ -18,13 +19,13 @@ export default function UsersTable() {
 	}, [users, filterCountry])
 
 	const sortedUsers = useMemo(() => {
-		return orderByCountry
+		return sortingValue !== SortBy.NONE
 			? filteredUsers.toSorted(
 					(a, b) => a.location.country.localeCompare(b.location.country)
 					// eslint-disable-next-line no-mixed-spaces-and-tabs
 			  )
 			: filteredUsers
-	}, [filteredUsers, orderByCountry])
+	}, [filteredUsers, sortingValue])
 
 	return (
 		<table className='table'>

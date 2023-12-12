@@ -18,7 +18,7 @@ function App() {
 			<h1>List Of Users</h1>
 			<header>
 				<ToggleBtn text='Color rows' propertyName='showColors' />
-				<ToggleBtn text='Order by country' propertyName='orderByCountry' />
+				<ToggleBtn text='Order by country' />
 				<NormalBtn text='Reset Users' handleClick={handleReset} />
 				<input
 					type='text'
