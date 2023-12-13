@@ -7,18 +7,12 @@ interface ToggleBtnProps {
 }
 
 const ToggleBtn = ({ text, propertyName }: ToggleBtnProps) => {
-	const { sortingValue } = useUserStore()
 	const { toggleProperty, setSortingValue } = useUserStore()
 
 	const handleClick =
 		propertyName !== undefined
 			? () => toggleProperty(propertyName)
-			: () => {
-					const newSortingValue =
-						sortingValue === SortBy.NONE ? SortBy.COUNTRY : SortBy.NONE
-					setSortingValue(newSortingValue)
-					// eslint-disable-next-line no-mixed-spaces-and-tabs
-			  }
+			: () => setSortingValue(SortBy.COUNTRY)
 
 	return (
 		<button className='btn' onClick={handleClick}>

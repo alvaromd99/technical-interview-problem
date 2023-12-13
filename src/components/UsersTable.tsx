@@ -4,7 +4,7 @@ import { SortBy } from '../types/types'
 
 export default function UsersTable() {
 	const { users, showColors, sortingValue, filterCountry } = useUserStore()
-	const { deleteUser } = useUserStore()
+	const { deleteUser, setSortingValue } = useUserStore()
 
 	const filteredUsers = useMemo(() => {
 		return filterCountry !== ''
@@ -18,28 +18,44 @@ export default function UsersTable() {
 			: users
 	}, [users, filterCountry])
 
+	const sortFunctions = useMemo(
+		() => ({
+			[SortBy.NONE]: () => filteredUsers,
+			[SortBy.COUNTRY]: () =>
+				filteredUsers.toSorted((a, b) =>
+					a.location.country.localeCompare(b.location.country)
+				),
+			[SortBy.NAME]: () =>
+				filteredUsers.toSorted((a, b) =>
+					a.name.first.localeCompare(b.name.first)
+				),
+			[SortBy.LAST]: () =>
+				filteredUsers.toSorted((a, b) =>
+					a.name.last.localeCompare(b.name.last)
+				),
+		}),
+		[filteredUsers]
+	)
+
 	const sortedUsers = useMemo(() => {
-		return sortingValue !== SortBy.NONE
-			? filteredUsers.toSorted(
-					(a, b) => a.location.country.localeCompare(b.location.country)
-					// eslint-disable-next-line no-mixed-spaces-and-tabs
-			  )
+		return sortFunctions[sortingValue]
+			? sortFunctions[sortingValue]()
 			: filteredUsers
-	}, [filteredUsers, sortingValue])
+	}, [filteredUsers, sortingValue, sortFunctions])
 
 	return (
 		<table className='table'>
 			<thead>
 				<tr>
 					<th>Photo</th>
-					<th>Name</th>
-					<th>Last Name</th>
-					<th>Country</th>
+					<th onClick={() => setSortingValue(SortBy.NAME)}>Name</th>
+					<th onClick={() => setSortingValue(SortBy.LAST)}>Last Name</th>
+					<th onClick={() => setSortingValue(SortBy.COUNTRY)}>Country</th>
 					<th>Actions</th>
 				</tr>
 			</thead>
 			<tbody className={`${showColors ? 'colored' : ''}`}>
-				{sortedUsers.map((user) => {
+				{sortedUsers?.map((user) => {
 					return (
 						<tr key={user.login.uuid}>
 							<td className='image-cell'>
