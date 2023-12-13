@@ -8,12 +8,10 @@ export default function UsersTable() {
 
 	const filteredUsers = useMemo(() => {
 		return filterCountry !== ''
-			? users.filter(
-					(user) =>
-						user.location.country
-							.toLowerCase()
-							.includes(filterCountry.toLowerCase())
-					// eslint-disable-next-line no-mixed-spaces-and-tabs
+			? users.filter((user) =>
+					user.location.country
+						.toLowerCase()
+						.includes(filterCountry.toLowerCase())
 			  )
 			: users
 	}, [users, filterCountry])

@@ -14,8 +14,6 @@ interface UserActions {
 	toggleProperty: <K extends keyof UserState>(propertyName: K) => void
 	setFilterCountry: (value: string) => void
 	setSortingValue: (value: SortBy) => void
-	/* getUsers: () => Promise<void> */
-	/* resetUsers: () => void */
 }
 
 export const useUserStore = create<UserState & UserActions>((set, get) => ({
@@ -58,19 +56,4 @@ export const useUserStore = create<UserState & UserActions>((set, get) => ({
 			sortingValue: newSortingValue,
 		}))
 	},
-
-	/* getUsers: async () => {
-		const response = await fetch('https://randomuser.me/api/?results=100')
-		const users = await response.json()
-	
-		set(() => ({
-			users: users.results,
-			originalUsers: users.results,
-		}))
-	}, */
-	/* resetUsers: () => {
-		set(() => ({
-			users: get().originalUsers,
-		}))
-	}, */
 }))

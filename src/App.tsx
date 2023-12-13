@@ -20,14 +20,13 @@ function App() {
 				<ToggleBtn text='Color rows' propertyName='showColors' />
 				<ToggleBtn text='Order by country' />
 				<NormalBtn text='Reset Users' handleClick={handleReset} />
-				<div className='input-cont'>
-					<input
-						type='text'
-						name='filter'
-						placeholder='Search a country'
-						onChange={(e) => setFilterCountry(e.target.value)}
-					/>
-				</div>
+				<input
+					className='search-input'
+					type='text'
+					name='filter'
+					placeholder='Search a country'
+					onChange={(e) => setFilterCountry(e.target.value)}
+				/>
 			</header>
 			{loading && !error && <p>Loading...</p>}
 			{!loading && error && <p>Error fetching data.</p>}

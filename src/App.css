@@ -1,12 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
 :root {
-	/* --bg-color: #023047;
-	--row-color-one: #8ecae6;
-	--row-color-two: #219ebc;
-	--letter-color: #fff;
-	--letter-color-two: #ffb703;
-	--help-color: #fb8500; */
 	--bg-color: #000;
 	--row-color-one: #603e9f;
 	--row-color-two: #382c58;
@@ -59,6 +53,14 @@
 		border: 1px solid var(--header-color);
 	}
 
+	& th {
+		user-select: none;
+	}
+
+	& th:not(:nth-child(1), :nth-child(5)) {
+		cursor: pointer;
+	}
+
 	& .image-cell img {
 		display: block;
 		margin: 0 auto;
@@ -73,6 +75,16 @@
 			background-color: var(--row-color-two);
 		}
 	}
+}
+
+.search-input {
+	min-height: 60px;
+	display: flex;
+	align-items: center;
+	border-radius: 15px;
+	background-color: var(--letter-color);
+	padding: 12px;
+	border: none;
 }
 
 /* Btn css */
