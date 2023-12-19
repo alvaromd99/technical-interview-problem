@@ -1,14 +1,17 @@
 import { useMemo } from 'react'
 import { useUserStore } from '../store/useUserStore'
 import { SortBy } from '../types/types'
+import { useFetchUsersTans } from '../hooks/useFetchUsersTans'
 
 export default function UsersTable() {
-	const { users, showColors, sortingValue, filterCountry } = useUserStore()
+	const { showColors, sortingValue, filterCountry } = useUserStore()
 	const { deleteUser, setSortingValue } = useUserStore()
+
+	const { data: users } = useFetchUsersTans()
 
 	const filteredUsers = useMemo(() => {
 		return filterCountry !== ''
-			? users.filter((user) =>
+			? users?.filter((user) =>
 					user.location.country
 						.toLowerCase()
 						.includes(filterCountry.toLowerCase())
@@ -20,15 +23,15 @@ export default function UsersTable() {
 		() => ({
 			[SortBy.NONE]: () => filteredUsers,
 			[SortBy.COUNTRY]: () =>
-				filteredUsers.toSorted((a, b) =>
+				filteredUsers?.toSorted((a, b) =>
 					a.location.country.localeCompare(b.location.country)
 				),
 			[SortBy.NAME]: () =>
-				filteredUsers.toSorted((a, b) =>
+				filteredUsers?.toSorted((a, b) =>
 					a.name.first.localeCompare(b.name.first)
 				),
 			[SortBy.LAST]: () =>
-				filteredUsers.toSorted((a, b) =>
+				filteredUsers?.toSorted((a, b) =>
 					a.name.last.localeCompare(b.name.last)
 				),
 		}),
