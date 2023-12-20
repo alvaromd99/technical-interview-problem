@@ -12,7 +12,9 @@ const useFetchUsers = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const response = await fetch('https://randomuser.me/api/?results=100')
+				const response = await fetch(
+					'https://randomuser.me/api/?results=100&seed=abc'
+				)
 				const usersData = await response.json()
 
 				setUsers(usersData.results)

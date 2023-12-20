@@ -33,7 +33,15 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		gap: 1rem;
+		flex-direction: column;
+
+		& .btn-cont {
+			display: flex;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 1rem;
+		}
 	}
 }
 
@@ -45,12 +53,15 @@
 	& th {
 		font-size: 1.4rem;
 		background-color: rgb(51, 51, 51);
+		position: sticky;
+		top: 0;
+		z-index: 10;
 	}
 
 	& th,
 	td {
 		padding: 10px;
-		border: 1px solid var(--header-color);
+		outline: 1px solid var(--header-color);
 	}
 
 	& th {

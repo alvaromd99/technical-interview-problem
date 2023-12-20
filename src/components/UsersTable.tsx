@@ -1,13 +1,10 @@
 import { useMemo } from 'react'
 import { useUserStore } from '../store/useUserStore'
 import { SortBy } from '../types/types'
-import { useFetchUsersTans } from '../hooks/useFetchUsersTans'
 
 export default function UsersTable() {
-	const { showColors, sortingValue, filterCountry } = useUserStore()
+	const { users, showColors, sortingValue, filterCountry } = useUserStore()
 	const { deleteUser, setSortingValue } = useUserStore()
-
-	const { data: users } = useFetchUsersTans()
 
 	const filteredUsers = useMemo(() => {
 		return filterCountry !== ''
